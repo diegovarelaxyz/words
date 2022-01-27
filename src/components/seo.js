@@ -10,7 +10,7 @@ import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
-const Seo = ({ description, lang, meta, title }) => {
+const Seo = ({ description, lang, meta, title, }) => {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -18,9 +18,7 @@ const Seo = ({ description, lang, meta, title }) => {
           siteMetadata {
             title
             description
-            social {
-              twitter
-            }
+            socialImage
           }
         }
       }
@@ -29,6 +27,10 @@ const Seo = ({ description, lang, meta, title }) => {
 
   const metaDescription = description || site.siteMetadata.description
   const defaultTitle = site.siteMetadata?.title
+  const imageType = `image/png`
+  const imageSize = `500`
+  const image = site.siteMetadata.socialImage
+  const imageAlt = `words - a project by Diego`
 
   return (
     <Helmet
@@ -59,16 +61,32 @@ const Seo = ({ description, lang, meta, title }) => {
           content: `summary`,
         },
         {
-          name: `twitter:creator`,
-          content: site.siteMetadata?.social?.twitter || ``,
-        },
-        {
           name: `twitter:title`,
           content: title,
         },
         {
           name: `twitter:description`,
           content: metaDescription,
+        },
+        {
+          name: `og:image`,
+          content: image,
+        },
+        {
+          name: `og:image:type`,
+          content: imageType,
+        },
+        {
+          name: `og:image:width`,
+          content: imageSize,
+        },
+        {
+          name: `og:image:height`,
+          content: imageSize,
+        },
+        {
+          name: `og:image:alt`,
+          content: imageAlt,
         },
       ].concat(meta)}
     />
@@ -86,6 +104,9 @@ Seo.propTypes = {
   lang: PropTypes.string,
   meta: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string.isRequired,
+  image: PropTypes.shape({
+    src: PropTypes.string.isRequired,
+  }),
 }
 
 export default Seo

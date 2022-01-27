@@ -25,7 +25,7 @@ const BlogIndex = ({ data, location }) => {
 
   return (
     <Layout location={location} title={siteTitle}>
-      <Seo title="All posts" />
+      <Seo title="words - Diego Varela" />
       <Bio />
       <ol style={{ listStyle: `none` }}>
         {posts.map(post => {
@@ -34,7 +34,7 @@ const BlogIndex = ({ data, location }) => {
           return (
             <li key={post.fields.slug}>
               <article
-                className="post-list-item"
+                className="post-list-item rounded-lg border-pink bg-pink/[.3] border-2 border-solid p-4 mr-2"
                 itemScope
                 itemType="http://schema.org/Article"
               >
